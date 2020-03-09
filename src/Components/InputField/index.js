@@ -60,7 +60,7 @@ export default class InputField extends Component {
             toValue: 1, 
             bounciness: 75, 
             useNativeDriver: true,
-             delay: 500
+            delay: 100
           }
         ).start()
       }

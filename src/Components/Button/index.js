@@ -26,7 +26,7 @@ export default class Button extends Component {
         toValue: 1,
         bounciness: 75,
         useNativeDriver: true,
-        delay: 500
+        delay: 100
 
       }
     ).start()
