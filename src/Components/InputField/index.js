@@ -59,14 +59,15 @@ export default class InputField extends Component {
           {
             toValue: 1, 
             bounciness: 75, 
-            useNativeDriver: true
+            useNativeDriver: true,
+             delay: 500
           }
         ).start()
       }
 
     render() {
 
-        const { placeholder, secureTextEntry, value, source,
+        const { placeholder, secureTextEntry, value, source,blurOnSubmit,
             placeholderTextColor, onChangeText,keyboardType, onSubmitEditing } = this.props
 
         return (
@@ -79,9 +80,12 @@ export default class InputField extends Component {
                             style={Styles.inputStyles}
                             onBlur={this._toggleState}
                             onFocus={this._toggleState}
-                            keyboardType={keyboardType}
+                            keyboardType={keyboardType} 
+                            ref={ _r => this.props.inputRef && this.props.inputRef(_r) }
                             onSubmitEditing={onSubmitEditing}
                             returnKeyType="go"
+                            blurOnSubmit={blurOnSubmit}
+                            {...this.props} 
                         />
                     </View>
                     <View style={Styles.inputRightstyles}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Animated, Image, TouchableOpacity } from 'react-native'
+import {  Animated, Image, TouchableOpacity } from 'react-native'
 import Styles from './Styles.js'
 import rightArrow from '../../assets/images/right-arrow.png'
 
@@ -25,12 +25,14 @@ export default class Button extends Component {
       {
         toValue: 1,
         bounciness: 75,
-        useNativeDriver: true
+        useNativeDriver: true,
+        delay: 500
+
       }
     ).start()
   }
 
-  spring = () => {
+  onPressAnimation = () => {
     this.springValue.setValue(0.01)
     Animated.spring(
       this.springValue,
@@ -45,7 +47,7 @@ export default class Button extends Component {
   }
 
   onPress = () => {
-    this.spring()
+    this.onPressAnimation()
   }
 
   render() {

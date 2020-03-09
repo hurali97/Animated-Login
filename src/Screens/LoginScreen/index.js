@@ -26,32 +26,9 @@ export default class LoginScreen extends Component {
 
     componentDidMount() {
         this._runAnimations()
-        // this._runFirstAnimation()
     }
 
-    // _runFirstAnimation = () => {
-    //     Animated.timing(
-    //                 this.animatedFirstTextValue,
-    //                 {
-    //                     toValue: 1,
-    //                     useNativeDriver: true
-    //                 }
-    //             ).start(()=>{
-    //                 this._runSecondAnimation()
-    //             })
-    // }
 
-    // _runSecondAnimation = () => {
-    //     Animated.timing(
-    //         this.animatedSecondTextValue,
-    //         {
-    //             toValue: 1,
-    //             useNativeDriver: true
-    //         }
-    //     ).start(()=>{
-    //         this.setState({ showLoginStuff: true })
-    //     })
-    // }
 
 
 
@@ -73,6 +50,7 @@ export default class LoginScreen extends Component {
             )
         ])
             .start(() => {
+                
                 this.setState({ showLoginStuff: true })
             })
     }
@@ -89,11 +67,57 @@ export default class LoginScreen extends Component {
 
     _onPress = () => {
         if (this.state.renderPasswordField) {
-
+            alert('Thank you')
         }
         else {
             this.setState({ renderPasswordField: true })
+            setTimeout(() => {
+                this.passwordField.focus()
+            }, 300)
         }
+    }
+
+    _renderLoginStuff = () => {
+        if (this.state.showLoginStuff)
+            return (
+                <View style={Styles.loginCard}>
+                    <InputField placeholder="johndoe@abc.com" placeholderTextColor="#ccc" source={emailIcon}
+                        value={this.state.email} onChangeText={(text) => this.onChangeText(text, 'email')}
+                        onSubmitEditing={this._onEmailSubmit} blurOnSubmit={false}
+                        keyboardType="email-address" inputRef={_r => this.emailField = _r}
+
+                    />
+
+                    {
+                        this._renderPassword()
+                    }
+
+                    <Button onPress={this._onPress} />
+
+                </View>
+            )
+        else
+            return null
+    }
+
+
+    _renderPassword = () => {
+        if (this.state.renderPasswordField)
+            return <InputField placeholder="Enter password" placeholderTextColor="#ccc" source={passwordIcon}
+                value={this.state.password} onChangeText={(text) => this.onChangeText(text, 'password')}
+                togglePassword={this._togglePassword} secureTextEntry={this.state.hidePassword}
+                inputRef={_r => this.passwordField = _r} onSubmitEditing={this._onPress}
+            />
+        else
+            return null
+    }
+
+    _onEmailSubmit = () => {
+        this.setState({ renderPasswordField: true })
+        setTimeout(() => {
+            this.passwordField.focus()
+        }, 300)
+
     }
 
     render() {
@@ -109,36 +133,10 @@ export default class LoginScreen extends Component {
                     <Animated.View style={[{ transform: [{ scale: this.animatedSecondTextValue }] }]}>
                         <Text style={Styles.headingStyle}>  Login Animated Demo </Text>
                     </Animated.View>
-
-
                 </View>
 
                 {
-                    this.state.showLoginStuff
-                        ? <View style={Styles.loginCard}>
-
-
-                            <InputField placeholder="johndoe@abc.com" placeholderTextColor="#ccc" source={emailIcon}
-                                value={this.state.email} onChangeText={(text) => this.onChangeText(text, 'email')}
-                                onSubmitEditing={() => this.setState({ renderPasswordField: true })} keyboardType="email-address"
-                            />
-
-                            {
-                                this.state.renderPasswordField
-                                    ? <InputField placeholder="Enter password" placeholderTextColor="#ccc" source={passwordIcon}
-                                        value={this.state.password} onChangeText={(text) => this.onChangeText(text, 'password')}
-                                        togglePassword={this._togglePassword} secureTextEntry={this.state.hidePassword}
-                                    />
-                                    : null
-                            }
-                            
-                            <Button onPress={this._onPress} />
-
-
-
-                        </View>
-
-                        : null
+                    this._renderLoginStuff()
                 }
             </ImageBackground>
         )
